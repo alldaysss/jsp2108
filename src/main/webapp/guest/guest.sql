@@ -16,3 +16,5 @@ insert into guest values (default, '관리자', 'my188cm@naver.com', '홈페이�
 insert into guest values (default, '홍길동', 'hkd1234@daum.net', '', default, '192.168.0.10', '잠시 방문해 봅니다');
 
 select * from guest;
+
+select count(*) from guest;
