@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="text-center" style="margin-bottom:0; height:150px; padding:30px 0 0; background-color: #ddd" >
-	  <h1>길동이 JSP프로젝트</h1>
+	  <h1>Allday JSP프로젝트</h1>
 	  <p>(본 프로젝트는 반응형으로 제작 되었습니다.)</p> 
 	</div>
 </body>
