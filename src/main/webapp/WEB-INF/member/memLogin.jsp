@@ -65,8 +65,10 @@
 		  <button type="button" onclick="fCheck()" class="btn btn-primary">로그인</button> &nbsp;<!-- 버튼처리 다시 하기 -->
 		  <button type="reset" class="btn btn-primary">취소</button> &nbsp;
 		  <button type="button" onclick="location.href='<%=request.getContextPath()%>/';" class="btn btn-primary">돌아가기</button> &nbsp;
-		  <button type="button" onclick="location.href='<%=request.getContextPath()%>/memberJoin.mem';" class="btn btn-primary">회원가입</button> &nbsp;
-		  <!-- <button type="button" class="btn btn-primary">아이디/비밀번호 찾기</button> --><!-- 이메일로 찾기로 -->
+		  <button type="button" onclick="location.href='<%=request.getContextPath()%>/memJoin.mem';" class="btn btn-primary">회원가입</button> &nbsp;
+		  <div class="row">  
+		  	<span class="col mt-2">[<a href="#" > 아이디찾기 </a>] / [<a href="#">아이디/비밀번호 찾기</a>]</span><!-- 이메일로 찾기로 -->
+		  </div>
 		</form>
 	</div>
 	</div>

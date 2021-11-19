@@ -1,22 +1,11 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-	Date today = new Date();
-	SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
-	String sToday = sdf.format(today);
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>mem join</title>
+    <title>member</title>
     <%@include file="../../include/bs4.jsp" %>
-    <!-- 아래는 다음 주소 API를 활용한 우편번호 검색 -->
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="<%=request.getContextPath()%>/js/woo.js"/></script>
     <script>
     	var idCheckOn = 0;
 
@@ -33,7 +22,7 @@
     			alert("아이디를 입력하세요") //주말에 정규식 체크
     			myform.mid.focus();
     		}
-    		else if(idc.mid){ //아이디 유효성검사
+    		else if(!idc.mid){ //아이디 유효성검사
                 alert("ID는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");        
                 return false;
             }
@@ -54,7 +43,7 @@
         		alert("닉네임을 입력하세요!");
         		myform.nickName.focus();
         	}
-        	else if(ndc.mid){ //별명 유효성검사
+        	else if(!ndc.mid){ //별명 유효성검사
                 alert("별명은 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");        
                 return false;
             }
@@ -102,14 +91,8 @@
 				// 기타 추가 체크해야할 항목들을 모두 체크하시오.
 				else {
 					if(idCheckOn == 1 && nickCheckOn == 1) {
-						/* alert("입력처리 되었습니다."); */
-						var postcode = myform.postcode.value + " ";
-						var roadAddress = myform.postcode.value + " ";
-						var detailAddress = myform.detailAddress.value + " ";
-						var extraAddress = myform.extraAddress.value + " ";
-						
-						myform.address.value = postcode + "/" + roadAddress + "/" + detailAddress + "/" + extraAddress
-						myform.submit();
+						alert("입력처리 되었습니다.");						
+						//myform.submit();
 						}
 					else {
 						if(idCheckOn == 0) {
@@ -120,7 +103,6 @@
 						}
 					}
 				}
-				// address = postcode + "/" + roadAddress + "/" + detailAddress + "/" + extraAddress
     	}
     </script>
 </head>
@@ -128,7 +110,7 @@
 <%@ include file="../../include/header_home.jsp" %> 
 <%@ include file="../../include/nav.jsp" %> 
 <div class="container" style="padding:30px;">
-  	<form name="myform" method="post" action="<%=request.getContextPath()%>/memJoinOk.mem" class="was-validated">
+  	<form name="myform" method="post" action="<%=request %>" class="was-validated">
     <h2>회 원 가 입</h2>
     <br/>
     <div class="form-group">
@@ -178,7 +160,7 @@
     </div>
     <div class="form-group">
       <label for="birthday">생일 :</label>
-			<input type="date" name="birthday" value="<%=sToday %>" class="form-control"/>
+			<input type="date" name="birthday" value="" class="form-control"/>
     </div>
     <div class="form-group">
       <div class="input-group mb-3">
@@ -204,15 +186,8 @@
     </div>
     <div class="form-group">
       <label for="address">주소 :</label>
-      <input type="hidden" class="form-control" name="address" id="address" placeholder="주소를 입력하세요." name="address"/>
-      <input type="text" name="postcode" id="sample4_postcode" placeholder="우편번호">
-	  <input type="button"  onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-	  <input type="text" name="roadAddress" id="sample4_roadAddress" size="50" placeholder="도로명주소">
-	  <!-- <input type="text" id="sample4_jibunAddress" placeholder="지번주소"> -->
-	  <span id="guide" style="color:#999;display:none"></span>
-	  <input type="text" name="detailAddress"  id="sample4_detailAddress" placeholder="상세주소">
-	  <input type="text" name="extraAddress" id="sample4_extraAddress" placeholder="참고항목">
-      </div>
+      <input type="text" class="form-control" id="address" placeholder="주소를 입력하세요." name="address"/>
+    </div>
     <div class="form-group">
 	    <label for="homepage">Homepage address:</label>
 	    <input type="text" class="form-control" name="homePage" value="http://" placeholder="이메일을 입력하세요." id="homePage"/>

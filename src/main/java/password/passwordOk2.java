@@ -31,7 +31,7 @@ public class passwordOk2 extends HttpServlet{
 		}
 		System.out.println("strPwd(아스키코드 문자로 변환된 비밀번호) : " + strPwd);
 		
-		intPwd = Long.parseLong(strPwd);
+		intPwd = Long.parseLong(strPwd); // DB에 넣었던 stePwd를 다시 불러서 복호화를 위해 정수형을 변환했다.
 		
 		//암호화를 위한 키(0x1234ABCD) [16진수]
 		long key = 0x1234ABCD; //암호화를 위한 키 (0x1234ABCD)

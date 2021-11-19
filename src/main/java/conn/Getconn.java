@@ -46,7 +46,7 @@ public class Getconn {
 		}
 	}
 
-	private void pstmtClose() {
+	public void pstmtClose() {
 		if(pstmt != null) {
 			try {
 				pstmt.close();

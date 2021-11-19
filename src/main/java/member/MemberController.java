@@ -21,8 +21,23 @@ public class MemberController extends HttpServlet {
 		if(com.equals("/memLogin")) {
 			viewPage += "/memLogin.jsp";
 		}
-		else if(com.equals("/memberJoin")) {
-			viewPage += "/memberJoin.jsp";
+		else if(com.equals("/memLoginOk")) {
+			command = new memLoginOkcommand();
+			command.execute(request, response);
+			viewPage = "WEB-INF/message/message.jsp";
+		}
+		else if(com.equals("/memLogOut")) {
+			command = new memLogOutcommand();
+			command.execute(request, response);
+			viewPage = "WEB-INF/message/message.jsp";
+		}
+		else if(com.equals("/memJoin")) {
+			viewPage += "/memJoin.jsp";
+		}
+		else if(com.equals("/memJoinOk")) {
+			command = new memJoinOkcommand();
+			command.execute(request, response);
+			viewPage = "WEB-INF/message/message.jsp";
 		}
 		else if(com.equals("/idCheck")) {
 			command = new IdCheckcommand();
@@ -34,11 +49,31 @@ public class MemberController extends HttpServlet {
 			command.execute(request, response);
 			viewPage += "/nickCheck.jsp";
 		}
-		else if(com.equals("/mbmJoinCheck")) {
-			command = new mbmJoinCheckcommand();
+		else if(com.equals("/memMain")) {
+			command = new memMaincommand();
+			command.execute(request, response);
+			viewPage += "/memMain.jsp";
+		}
+		else if(com.equals("/memUpdate")) {
+//			command = new MemUpdatecommand();
+//			command.execute(request, response);
+			viewPage += "/memUpdate.jsp";
+		}
+		else if(com.equals("/memUpdateOk")) {
+			command = new MemUpdateOkcommand();
 			command.execute(request, response);
 			viewPage = "WEB-INF/message/message.jsp";
 		}
+		else if(com.equals("/memDelete")) {
+			command = new MemDeletecommand();
+			command.execute(request, response);
+			viewPage = "WEB-INF/message/message.jsp";
+		}
+//		else if(com.equals("/memList")) {
+//			command = new AdMemberListCommand();
+//			command.execute(request, response);
+//			viewPage += "/memList.jsp";
+//		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
