@@ -133,7 +133,7 @@
 				<c:if test="${pag < totPage}"><a href="${ctp}/adMemberList.ad?pag=${pag+1}&level=${level}&mid=${mid}">▶</a></c:if> &nbsp;&nbsp;
 				<c:if test="${pag != totPage}"><a href="${ctp}/adMemberList.ad?pag=${totPage}&level=${level}&mid=${mid}">▷▷</a></c:if>
 		</div>
-		<!--  페이징처리 끝 -->
+	<!--  페이징처리 끝 -->
 	</div>
 <br/>
 </body>

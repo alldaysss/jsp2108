@@ -43,7 +43,7 @@ public class MemUpdatecommand implements MemberInterface {
 		request.setAttribute("birthday", vo.getBirthday().substring(0,10));
 		
 		// 전화번호
-		String[] tel = vo.getTel().split("/");
+		String[] tel = vo.getTel().split("-");
 		request.setAttribute("tel1", tel[0]);
 		request.setAttribute("tel2", tel[1]);
 		request.setAttribute("tel3", tel[2]);

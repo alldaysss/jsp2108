@@ -19,116 +19,131 @@
     <script src="<%=request.getContextPath()%>/js/woo.js"/></script>
     <script>
     	var idCheckOn = 0;
-
+    	var nickCheckOn = 0;
     	
-    	// 아이디체크
-    	function idCheck() {
-
-    		var mid = myform.mid.value;
-    		var url = "<%=request.getContextPath()%>/idCheck.mem?mid="+mid;
-    		
-    		var idc = /^[a-z][a-z0-9_]{4,12}$/g; // 아이디
-    		
-    		if(mid=="") {
-    			alert("아이디를 입력하세요") //주말에 정규식 체크
-    			myform.mid.focus();
-    		}
-    		else if(idc.mid){ //아이디 유효성검사
-                alert("ID는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");        
-                return false;
-            }
-    		else {
-    			idCheckOn = 1
-    			window.open(url,"nWin","width=500px,height=250px");
-    		}
-    	}
-    	
-    	// 닉네임 체크
-    	function nickCheck() {
+    	// 아이디 중복체크
+        function idCheck() {
+        	var mid = myform.mid.value;
+        	var url = "<%=request.getContextPath()%>/idCheck.mem?mid="+mid;
+        	
+        	if(mid=="") {
+        		alert("아이디를 입력하세요!");
+        		myform.mid.focus();
+        	}
+        	else {
+        		idCheckOn = 1;
+        		window.open(url,"nWin","width=500px,height=250px");
+        	}
+        }
+        
+      	// 닉네임 중복체크
+        function nickCheck() {
         	var nickName = myform.nickName.value;
         	var url = "<%=request.getContextPath()%>/nickCheck.mem?nickName="+nickName;
-        	
-        	var ndc = /^[a-z][a-z0-9_]{4,12}$/g; // 아이디
         	
         	if(nickName=="") {
         		alert("닉네임을 입력하세요!");
         		myform.nickName.focus();
         	}
-        	else if(ndc.mid){ //별명 유효성검사
-                alert("별명은 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");        
-                return false;
-            }
         	else {
-        		nickCheckOn = 1
+        		nickCheckOn = 1;
         		window.open(url,"nWin","width=500px,height=250px");
         	}
         }
-		
-    	function idReset() {
-    		idCheckOn = 0;
-    	}
-    	function nickReset() {
-    		nickCheckOn = 0;
-    	}
-    	
-    	// 회원가입 폼 체크
-    	function fCheck() {
-				var mid = myform.mid.value;
-				var pwd = myform.pwd.value;
-				var nickName = myform.nickName.value;
-				var name = myform.name.value;
-				var email1 = myform.email1.value;
-				
-				if(mid == "") {
-					alert("아이디를 입력하세요")
-					myform.mid.focus();
-				}
-				if(pwd == "") {
-					alert("비밀번호를 입력하세요")
-					myform.pwd.focus();
-				}
-				if(nickName == "") {
-					alert("별명을 입력하세요")
-					myform.nickName.focus();
-				}
-				if(name== "") {
-					alert("이름을 입력하세요")
-					myform.name.focus();
-				}
-				if(email1 == "") {
-					alert("이메일을 입력하세요")
-					myform.email1.focus();
-				}
-				// 기타 추가 체크해야할 항목들을 모두 체크하시오.
-				else {
-					if(idCheckOn == 1 && nickCheckOn == 1) {
-						/* alert("입력처리 되었습니다."); */
-						var postcode = myform.postcode.value + " ";
-						var roadAddress = myform.postcode.value + " ";
-						var detailAddress = myform.detailAddress.value + " ";
-						var extraAddress = myform.extraAddress.value + " ";
-						
-						myform.address.value = postcode + "/" + roadAddress + "/" + detailAddress + "/" + extraAddress
-						myform.submit();
-						}
-					else {
-						if(idCheckOn == 0) {
-							alert("아이디 중복체크 버튼을 눌러주세요!!!");													
-						}
-						else {
-							alert("닉네임, 중복체크 버튼을 눌러주세요!!!");													
-						}
-					}
-				}
-				// address = postcode + "/" + roadAddress + "/" + detailAddress + "/" + extraAddress
-    	}
+      	
+      	function idReset() {
+      		idCheckOn = 0;
+      	}
+      	
+      	function nickReset() {
+      		nickCheckOn = 0;
+      	}
+        
+      	// 회원가입폼 체크
+        function fCheck() {
+        	var mid = myform.mid.value;
+        	var pwd = myform.pwd.value;
+        	var nickName = myform.nickName.value;
+        	var name = myform.name.value;
+        	var email1 = myform.email1.value;
+        	
+        	// 회원 사진 업로드
+        	var fName = myform.fName.value;
+        	var ext = fName.substring(fName.lastIndexOf(".")+1);	// 파일 확장자 발췌
+        	var uExt = ext.toUpperCase();
+        	var maxSize = 1024 * 1024 * 2;	// 업로드할 파일의 최대 용량은 2MByte로 한다.
+        	
+        	if(mid == "") {
+        		alert("아이디를 입력하세요");
+        		myform.mid.focus();
+        	}
+        	else if(pwd == "") {
+        		alert("비밀번호를 입력하세요");
+        		myform.pwd.focus();
+        	}
+        	else if(nickName == "") {
+        		alert("닉네임을 입력하세요");
+        		myform.nickName.focus();
+        	}
+        	else if(name == "") {
+        		alert("성명을 입력하세요");
+        		myform.name.focus();
+        	}
+        	else if(email1 == "") {
+        		alert("이메일을 입력하세요");
+        		myform.email1.focus();
+        	}
+        	// 기타 추가 체크해야 할 항목들을 모두 체크하세요.
+        	else {
+        		if(idCheckOn == 1 && nickCheckOn == 1) {
+        			//alert("입력처리 되었습니다.!");
+        			var postcode = myform.postcode.value + " ";
+        			var roadAddress = myform.roadAddress.value + " ";
+        			var detailAddress = myform.detailAddress.value + " ";
+        			var extraAddress = myform.extraAddress.value + " ";
+        			myform.address.value = postcode + "/" + roadAddress + "/" + detailAddress + "/" + extraAddress
+        			
+        			// 사진파일 업로드 체크
+        			if(fName.trim() == "") {
+    		    		myform.photo.value = "noimage";
+    		    	}
+        			else {
+    			    	var fileSize = document.getElementById("file").files[0].size;
+    			    	
+    			    	if(uExt != "JPG" && uExt != "GIF" && uExt != "PNG") {
+    			    		alert("업로드 가능한 파일은 'JPG/GIF/PNG");
+    			    		return false;
+    			    	}
+    			    	else if(fName.indexOf(" ") != -1) {
+    			    		alert("업로드할 파일명에는 공백을 포함하실수 없습니다.");
+    			    		return false;
+    			    	}
+    			    	else if(fileSize > maxSize) {
+    			    		alert("업로드할 파일의 크기는 2MByte 이하입니다.");
+    			    		return false;
+    			    	}
+        			}
+    		    	myform.submit();
+      			}
+        	
+        	//}
+        		else {
+        			if(idCheckOn == 0) {
+        				alert("아이디 중복체크버튼을 눌러주세요!");
+        			}
+        			else {
+        				alert("닉네임, 중복체크버튼을 눌러주세요!");
+        			}
+        		}
+        	}
+        }
     </script>
 </head>
 <body>
 <%@ include file="../../include/header_home.jsp" %> 
 <%@ include file="../../include/nav.jsp" %> 
 <div class="container" style="padding:30px;">
-  	<form name="myform" method="post" action="<%=request.getContextPath()%>/memJoinOk.mem" class="was-validated">
+  	<form name="myform" method="post" action="<%=request.getContextPath()%>/memJoinOk.mem" class="was-validated" enctype="Multipart/form-data">
     <h2>회 원 가 입</h2>
     <br/>
     <div class="form-group">
@@ -202,6 +217,7 @@
 	      <input type="text" name="tel3" size=4 maxlength=4 class="form-control"/>
 	    </div> 
     </div>
+    
     <div class="form-group">
       <label for="address">주소 :</label>
       <input type="hidden" class="form-control" name="address" id="address" placeholder="주소를 입력하세요." name="address"/>
@@ -292,9 +308,14 @@
 			  </label>
 			</div>
     </div>
+    <div class="form-group">
+    회원사진 : (파일용량 2Mbyte이내)
+    <input type="file" name="fName" if="file" class="form-control-file border"/>
+    </div>
     <button type="button" class="btn btn-secondary" onclick="fCheck()">회원가입</button>
     <button type="reset" class="btn btn-secondary">다시작성</button>
     <button type="button" class="btn btn-secondary" onclick="location.href='<%=request.getContextPath()%>/memLogin.mem';">돌아가기</button>
+  	<input type="hidden" name="photo"/>
   	</form>
   <p><br/></p>
 </div>

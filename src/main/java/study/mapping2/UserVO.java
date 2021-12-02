@@ -4,6 +4,8 @@ public class UserVO {
 	private int idx;
 	private String name;
 	private int age;
+	
+	
 	public int getIdx() {
 		return idx;
 	}

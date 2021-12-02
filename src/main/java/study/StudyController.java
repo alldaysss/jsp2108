@@ -8,6 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import study.ajax.Ajax1Command;
+import study.pdsTest.DownLoad1Command;
+import study.pdsTest.FileDeleteCommand;
+import study.pdsTest.UpLoad1OkCommand;
+import study.pdsTest.UpLoad2OkCommand;
 
 @WebServlet("*.st")
 public class StudyController extends HttpServlet{
@@ -19,7 +26,14 @@ public class StudyController extends HttpServlet{
 		String uri = request.getRequestURI();
 		String com = uri.substring(uri.lastIndexOf("/"), uri.lastIndexOf("."));
 		
-		if(com.equals("/el1")) {
+		HttpSession session = request.getSession();
+		int level = session.getAttribute("sLevel")==null ? 99 :  (int) session.getAttribute("sLevel");
+		if(level == 1 || level >= 4) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/");
+			dispatcher.forward(request, response);
+			return;
+		}
+		else if(com.equals("/el1")) {
 			viewPage += "/el/el1.jsp";
 		}
 		else if(com.equals("/el2")) {
@@ -39,8 +53,57 @@ public class StudyController extends HttpServlet{
 		else if(com.equals("/noimage")) {
 			viewPage += "/WEB-INF/message/noimage.jpg";
 		}
-		
+		else if(com.equals("/ajax1")) {
+			command = new Ajax1Command();
+			command.execute(request, response);
+			viewPage += "/ajax/ajax1.jsp";
+		}
+		else if(com.equals("/ajax2")) {
+			viewPage += "/ajax/ajax2.jsp";
+		}
+		else if(com.equals("/pdsTest1")) {
+			viewPage += "/pdsTest/upLoad1.jsp";
+		}
+		else if(com.equals("/upLoad1Ok")) {
+			command = new UpLoad1OkCommand();
+			command.execute(request, response);
+			viewPage = "/WEB-INF/message/message.jsp";
+		}
+		else if(com.equals("/downLoad1")) {
+			command = new DownLoad1Command();
+			command.execute(request, response);
+			viewPage += "/pdsTest/downLoad1.jsp";
+		}
+		else if(com.equals("/pdsTest2")) {
+			viewPage += "/pdsTest/upLoad2.jsp";
+		}
+		else if(com.equals("/upLoad2Ok")) {
+			command = new UpLoad2OkCommand();
+			command.execute(request, response);
+			viewPage = "/WEB-INF/message/message.jsp";
+		}
+		else if(com.equals("/pdsTest3")) {
+			viewPage += "/pdsTest/upLoad3.jsp";
+		}
+		else if(com.equals("/fileDelete")) {
+			command = new FileDeleteCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/dynamicForm")) {
+			viewPage += "/dynamicForm/dynamicForm.jsp";
+		}
+		else if(com.equals("/shaTest")) {
+			viewPage += "/password/shaTest.jsp";
+		}
+		else if(com.equals("/shaTestOk")) {
+			command = new ShaTestOkCommand();
+			command.execute(request, response);
+			return;
+		}
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+		
 		dispatcher.forward(request, response);
 	}
 }

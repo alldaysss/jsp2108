@@ -35,6 +35,7 @@ insert into member values (default, 'admin','1234',1,'관리맨','관리자',def
 update member set pwd = '28520366', pwdKey=19, tel='010/3423/2704', address='경기도 안성시///' where mid ='admin';
 update member set level = 0 where mid = 'admin';
 update member set tel = 010-1237-1234 where mid ='hdk1234';
+
 select * from member;
 
 alter table member add column todayCnt int default 0;

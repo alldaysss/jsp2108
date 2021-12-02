@@ -76,7 +76,7 @@ public class MemberDAO {
 	public int setMemberJoinOk(MemberVO vo) {
 		int res = 0;
 		try {
-			sql = "insert into member values (default,?,?,?,?,?,?,?,?,?,?,?,?,?,default,?,?,default,default,default,default,default,default,default)";
+			sql = "insert into member values (default,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default,default,default,default,default,default,default)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getMid());
 			pstmt.setString(2, vo.getPwd());
@@ -91,8 +91,9 @@ public class MemberDAO {
 			pstmt.setString(11, vo.getHomePage());
 			pstmt.setString(12, vo.getJob());
 			pstmt.setString(13, vo.getHobby());
-			pstmt.setString(14, vo.getContent());
-			pstmt.setString(15, vo.getUserInfor());
+			pstmt.setString(14, vo.getPhoto());
+			pstmt.setString(15, vo.getContent());
+			pstmt.setString(16, vo.getUserInfor());
 			pstmt.executeUpdate();
 			res = 1;
 		} catch (SQLException e) {
@@ -133,6 +134,7 @@ public class MemberDAO {
 				vo.setHobby(rs.getString("hobby"));
 				vo.setContent(rs.getString("content"));
 				vo.setUserInfor(rs.getString("userInfor"));
+				vo.setPhoto(rs.getString("photo"));
 			}
 			else {
 				vo = null;
@@ -175,6 +177,11 @@ public class MemberDAO {
 				vo.setTodayCnt(rs.getInt("todayCnt"));
 				vo.setPoint(rs.getInt("point"));
 				vo.setName(rs.getString("Name"));
+				
+				vo.setEmail(rs.getString("email"));
+				vo.setHomePage(rs.getString("homePage"));
+				
+				
 			} catch (SQLException e) {
 				System.out.println("SQL 오류 : " + e.getMessage());
 			} finally {
@@ -187,7 +194,7 @@ public class MemberDAO {
 			try {
 				sql = "update member set pwd=?,nickName=?,name=?,email=?,gender=?,"
 					+ "birthday=?, tel=?, address=?, homePage=?, job=?, hobby=?,"
-					+ "content=?, userInfor=?, pwdKey=? where mid=?";
+					+ "content=?, userInfor=?, pwdKey=?, photo=? where mid=?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, vo.getPwd());
 				pstmt.setString(2, vo.getNickName());
@@ -203,7 +210,8 @@ public class MemberDAO {
 				pstmt.setString(12, vo.getContent());
 				pstmt.setString(13, vo.getUserInfor());
 				pstmt.setInt(14, vo.getPwdKey());
-				pstmt.setString(15, vo.getMid());
+				pstmt.setString(15, vo.getPhoto());
+				pstmt.setString(16, vo.getMid());
 				pstmt.executeUpdate();
 				res = 1;
 			} catch (SQLException e) {
@@ -357,18 +365,16 @@ public class MemberDAO {
 					pstmt = conn.prepareStatement(sql);
 				}
 				else if(level != 99 && mid.equals("")){
-					sql = "select count()* from member where level = ?";
+					sql = "select count(*) from member where level = ?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setInt(1, level);
-					
 				}
 				else {
-					sql = "select count()* from member where mid like ?";
+					sql = "select count(*) from member where mid like ?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, "%"+mid+"%");
-					
 				}
-				pstmt = conn.prepareStatement(sql);
+				//pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				rs.next();
 				totRecCnt = rs.getInt(1);

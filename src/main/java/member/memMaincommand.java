@@ -30,7 +30,6 @@ public class memMaincommand implements MemberInterface {
 		
 		// 총 방문횟수와 오늘 방문횟수 가져오기
 		MemberVO vo = dao.getUserInfor(mid);
-		System.out.println("vo : " + vo);
 		request.setAttribute("visitCnt", vo.getVisitCnt());
 		request.setAttribute("todayCnt", vo.getTodayCnt());
 		request.setAttribute("point", vo.getPoint());

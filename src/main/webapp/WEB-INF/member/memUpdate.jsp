@@ -43,10 +43,10 @@
 	
 	// 주소
 	String[] address = vo.getAddress().split("/");
-	String address1 = address[0];
-	String address2 = address.length >= 2 ? address[1] : "";
-	String address3 = address.length >= 3 ? address[2] : "";
-	String address4 = address.length >= 4 ? address[3] : "";
+	String address1 = address[0].trim();
+	String address2 = address[1].trim();
+	String address3 = address[2].trim();
+	String address4 = address[3].trim();
 	
 	// 취미
 	String[] hobby = {"등산", "낚시", "수영", "독서", "영화감상" , "바둑" , "축구", "기타"};
@@ -118,10 +118,11 @@
 					if(nickCheckOn == 1 || nickCheckSw == 0) {
 						/* alert("입력처리 되었습니다."); */
 						var postcode = myform.postcode.value;
-						var roadAddress = myform.postcode.value;
+						var roadAddress = myform.roadAddress.value;
 						var detailAddress = myform.detailAddress.value;
-						var extraAddress = myform.extraAddress.value;
+						var extraAddress = myform.extraAddress.value + " ";
 						myform.address.value = postcode + "/" + roadAddress + "/" + detailAddress + "/" + extraAddress
+						//alert("주소 : " + detailAddress);
 						myform.submit();
 						}
 					else {
@@ -139,7 +140,7 @@
 <%@ include file="../../include/header_home.jsp" %> 
 <%@ include file="../../include/nav.jsp" %> 
 <div class="container" style="padding:30px;">
-  	<form name="myform" method="post" action="<%=request.getContextPath()%>/memUpdateOk.mem" class="was-validated">
+  	<form name="myform" method="post" action="<%=request.getContextPath()%>/memUpdateOk.mem" enctype="multipart/form-data" class="was-validated">
     <h2>회 원 정 보 수 정</h2>
     <br/>
     <div class="form-group">
@@ -319,11 +320,16 @@
 			    <input type="radio" class="form-check-input" name="userInfor" value="비공개" <% if(vo.getUserInfor().equals("비공개")) { %> checked <% } %>/>비공개
 			  </label>
 			</div>
+	<div  class="form-group">
+      회원 사진(파일용량:2MByte이내) : <a href="<%=request.getContextPath()%>/data/member/<%=vo.getPhoto()%>" target="_blank"><img src="<%=request.getContextPath()%>/data/member/<%=vo.getPhoto()%>" width="80px"/></a>
+      <input type="file" name="fName" id="file" class="form-control-file border"/>
+    </div>
     </div>
     <button type="button" class="btn btn-secondary" onclick="fCheck()">정보수정</button>
     <button type="reset" class="btn btn-secondary">다시작성</button>
     <button type="button" class="btn btn-secondary" onclick="location.href='<%=request.getContextPath()%>/memMain.mem';">돌아가기</button>
   	<input type="hidden" name="mid" value="${sMid}"/>
+  	<input type="hidden" name="photo" value="${vo.photo}"/>
   	</form>
   <p><br/></p>
 </div>
